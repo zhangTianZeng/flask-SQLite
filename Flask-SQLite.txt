@@ -1,0 +1,25 @@
+#coding:utf-8
+from flask import  Flask
+from flask_sqlalchemy import SQLAlchemy
+#导入SQLAlchemy用于产生数据库对象db
+import os
+app  =Flask(__name__)
+
+base_path =os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(base_path,'data.sqlite')
+#配置路径
+app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
+#执行结束自动提交数据库的变动
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=True
+#解决警告问题
+db = SQLAlchemy(app)
+#创建一个SQLAlchemy实例
+print r'sqlite:///'+os.path.join(base_path,'data.sqlite')
+
+
+@app.route("/")
+def index():
+    return "hello"
+
+if __name__=="__main__":
+    app.run()
